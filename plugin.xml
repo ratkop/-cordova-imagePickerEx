@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
   xmlns:android="http://schemas.android.com/apk/res/android"
-  id="com.synconset.imagepickerEx"
-  version="1.0.4">
+  id="com.synconset.ImagePickerExt"
+  version="1.0.5">
 
-	<name>ImagePickerEx</name>
+	<name>ImagePickerExt</name>
 	 
 	<description>
 		This plugin allows selection of multiple images from the camera roll / gallery in a phonegap app

@@ -15,7 +15,7 @@ using the Cordova / Phonegap command line interface.
 
 ## Using the plugin
 
-The plugin is extended from the plugin https://github.com/ratkop/-cordova-imagePickerEx`
+The plugin is extended from the plugin https://github.com/wymsee/cordova-imagePicker`
 The only difference is that it returns a double array, if you select 10 photos it will return array of 20 files'
 half are optimized and half are the actual images`
 The goal was that we needed to use the actual images for upload and the optimized for display on the scree`
