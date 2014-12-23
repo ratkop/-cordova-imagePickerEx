@@ -73,38 +73,7 @@
         @autoreleasepool {
             ALAssetRepresentation *assetRep = [asset defaultRepresentation];
             CGImageRef imgRef = NULL;
-			UIAlertView *message0 = [[UIAlertView alloc] initWithTitle:@"first message"
-                                                      message:fileNameOriginal
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-			NSString *fileNameOriginal = [assetRep filename];
-			[message0 show];
-			UIAlertView *message1 = [[UIAlertView alloc] initWithTitle:@"fileNameOriginal"
-                                                      message:fileNameOriginal
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-     
-			[message1 show];
-			NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-			NSString *documentsDirectory = [paths objectAtIndex:0];
-			UIAlertView *message2 = [[UIAlertView alloc] initWithTitle:@"documentsDirectory"
-                                                      message:documentsDirectory
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-     
-			[message2 show];
-            NSString* _pathOrig = [documentsDirectory stringByAppendingPathComponent:fileNameOriginal ];
-			UIAlertView *message3 = [[UIAlertView alloc] initWithTitle:@"_pathOrig"
-                                                      message:_pathOrig
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-     
-			[message2 show];
-			//[resultStrings addObject:[[NSURL fileURLWithPath:filePath] absoluteString]];
+			
             //defaultRepresentation returns image as it appears in photo picker, rotated and sized,
             //so use UIImageOrientationUp when creating our image below.
             if (picker.returnsOriginalImage) {
