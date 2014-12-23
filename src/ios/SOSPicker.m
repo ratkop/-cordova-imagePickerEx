@@ -73,7 +73,11 @@
         @autoreleasepool {
             ALAssetRepresentation *assetRep = [asset defaultRepresentation];
             CGImageRef imgRef = NULL;
-            
+			NSString *fileNameOriginal = [assetRep filename];
+			NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+			NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSString* _pathOrig = [documentsDirectory stringByAppendingPathComponent:fileNameOriginal ];
+			[resultStrings addObject:_pathOrig];
             //defaultRepresentation returns image as it appears in photo picker, rotated and sized,
             //so use UIImageOrientationUp when creating our image below.
             if (picker.returnsOriginalImage) {
@@ -95,7 +99,6 @@
                 result = [CDVPluginResult resultWithStatus:CDVCommandStatus_IO_EXCEPTION messageAsString:[err localizedDescription]];
                 break;
             } else {
-				[resultStrings addObject:[[NSURL fileURLWithPath:asset] absoluteString]];
                 [resultStrings addObject:[[NSURL fileURLWithPath:filePath] absoluteString]];
             }
         }
