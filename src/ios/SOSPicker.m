@@ -69,7 +69,7 @@
         do {
             filePath = [NSString stringWithFormat:@"%@/%@%03d.%@", docsPath, CDV_PHOTO_PREFIX, i++, @"jpg"];
         } while ([fileMgr fileExistsAtPath:filePath]);
-        
+         
         @autoreleasepool {
             ALAssetRepresentation *assetRep = [asset defaultRepresentation];
             CGImageRef imgRef = NULL;
