@@ -73,7 +73,13 @@
         @autoreleasepool {
             ALAssetRepresentation *assetRep = [asset defaultRepresentation];
             CGImageRef imgRef = NULL;
+			UIAlertView *message0 = [[UIAlertView alloc] initWithTitle:@"first message"
+                                                      message:fileNameOriginal
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
 			NSString *fileNameOriginal = [assetRep filename];
+			[message0 show];
 			UIAlertView *message1 = [[UIAlertView alloc] initWithTitle:@"fileNameOriginal"
                                                       message:fileNameOriginal
                                                      delegate:nil
