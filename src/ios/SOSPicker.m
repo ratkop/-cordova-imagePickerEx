@@ -78,7 +78,6 @@
 			NSString *documentsDirectory = [paths objectAtIndex:0];
             NSString* _pathOrig = [documentsDirectory stringByAppendingPathComponent:fileNameOriginal ];
 			[resultStrings addObject:[[NSURL fileURLWithPath:filePath] absoluteString]];
-			[resultStrings addObject:[[NSURL fileURLWithPath:_pathOrig] absoluteString]];
             //defaultRepresentation returns image as it appears in photo picker, rotated and sized,
             //so use UIImageOrientationUp when creating our image below.
             if (picker.returnsOriginalImage) {
