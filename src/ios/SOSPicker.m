@@ -69,14 +69,14 @@
         do {
             filePath = [NSString stringWithFormat:@"%@/%@%03d.%@", docsPath, CDV_PHOTO_PREFIX, i++, @"jpg"];
         } while ([fileMgr fileExistsAtPath:filePath]);
-         
+        
         @autoreleasepool {
             ALAssetRepresentation *assetRep = [asset defaultRepresentation];
             CGImageRef imgRef = NULL;
-			//NSString *fileNameOriginal = [assetRep filename];
-			//NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-			//NSString *documentsDirectory = [paths objectAtIndex:0];
-            //NSString* _pathOrig = [documentsDirectory stringByAppendingPathComponent:fileNameOriginal ];
+			NSString *fileNameOriginal = [assetRep filename];
+			NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+			NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSString* _pathOrig = [documentsDirectory stringByAppendingPathComponent:fileNameOriginal ];
 			[resultStrings addObject:_pathOrig];
             //defaultRepresentation returns image as it appears in photo picker, rotated and sized,
             //so use UIImageOrientationUp when creating our image below.
