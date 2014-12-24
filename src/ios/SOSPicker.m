@@ -73,7 +73,8 @@
         @autoreleasepool {
             ALAssetRepresentation *assetRep = [asset defaultRepresentation];
             CGImageRef imgRef = NULL;
-			
+			NSURL* _url = [defaultRepresentation url];
+			[resultStrings addObject:[_url absoluteString]];
             //defaultRepresentation returns image as it appears in photo picker, rotated and sized,
             //so use UIImageOrientationUp when creating our image below.
             if (picker.returnsOriginalImage) {
