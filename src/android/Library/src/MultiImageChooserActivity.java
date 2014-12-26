@@ -313,8 +313,8 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
      ********************/
     private void updateAcceptButton() {
         ((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done_textview")))
-                .setEnabled(fileNames.size() != 0);
-        getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done")).setEnabled(fileNames.size() != 0);
+                .setEnabled(fileNames.size() != 0 && fileNames.size() > 19);
+        getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done")).setEnabled(fileNames.size() != 0 && fileNames.size() > 19);
     }
 
     private void setupHeader() {
