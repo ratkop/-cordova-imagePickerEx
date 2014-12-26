@@ -23,6 +23,15 @@
     android:dividerPadding="12dp">
 
     <include layout="@layout/actionbar_discard_button" />
-	<include layout="@layout/actionbar_title_text" />
+	<TextView
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:id="@+id/actionbar_title_textview"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingRight="20dp"
+        android:text="@string/done"
+         />
     <include layout="@layout/actionbar_done_button" />
 </LinearLayout>
