@@ -175,6 +175,7 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
         progress = new ProgressDialog(this);
         progress.setTitle("Processing Images");
         progress.setMessage("This may take a few moments");
+		((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_title_textview"))).setText("");
     }
     
     @Override
@@ -185,6 +186,8 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
         if (name == null) {
             return;
         }
+		((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_title_textview"))).setText((maxImageCount-maxImages)+1+ " foto's");
+		
         boolean isChecked = !isChecked(position);
         if (maxImages == 0 && isChecked) {
             isChecked = false;
