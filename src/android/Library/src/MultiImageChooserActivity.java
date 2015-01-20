@@ -186,11 +186,11 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
         if (name == null) {
             return;
         }
+		boolean isChecked = !isChecked(position);
 		if(isChecked)
 			((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_title_textview"))).setText((maxImageCount-maxImages)+1+ " foto's");
 		else ((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_title_textview"))).setText((maxImageCount-maxImages)-1+ " foto's");
 		
-        boolean isChecked = !isChecked(position);
         if (maxImages == 0 && isChecked) {
             isChecked = false;
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
