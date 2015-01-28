@@ -76,6 +76,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.pm.ActivityInfo;
 
 public class MultiImageChooserActivity extends Activity implements OnItemClickListener,
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -133,7 +134,8 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
 
         Display display = getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
-        
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+		
         colWidth = width / 4;
 
         gridView = (GridView) findViewById(fakeR.getId("id", "gridview"));
