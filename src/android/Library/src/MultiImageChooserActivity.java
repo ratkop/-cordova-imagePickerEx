@@ -119,6 +119,11 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
     
     private ProgressDialog progress;
 
+	@Override
+	public void onBackPressed() {
+		
+	}
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
