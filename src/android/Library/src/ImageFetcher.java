@@ -245,6 +245,10 @@ public class ImageFetcher {
             }
         }
     }
+	
+	@Override
+	public void onBackPressed() {
+	}
 
     /**
      * A fake Drawable that will be attached to the imageView while the download
