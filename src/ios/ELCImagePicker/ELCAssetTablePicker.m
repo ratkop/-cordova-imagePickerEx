@@ -80,6 +80,14 @@
 
             ELCAsset *elcAsset = [[ELCAsset alloc] initWithAsset:result];
             [elcAsset setParent:self];
+			NSURL* originalFilePath = [[result defaultRepresentation] url];
+            NSArray *filePath = [[originalFilePath absoluteString] componentsSeparatedByString:@"//"];
+            NSString *stringFilePath = filePath[1];
+            NSArray *selectedImages = [self.selectedImages componentsSeparatedByString:@";"];
+            for(NSString *selectedImage in selectedImages){
+                if([selectedImage isEqualToString:stringFilePath])
+                    elcAsset.selected = YES;
+            }
             
             BOOL isAssetFiltered = NO;
             if (self.assetPickerFilterDelegate &&
@@ -106,8 +114,10 @@
                                               atScrollPosition:UITableViewScrollPositionBottom
                                                       animated:NO];
             }
-            
-            [self.navigationItem setTitle:self.singleSelection ? @"Pick Photo" : @"Pick Photos"];
+            NSString *numSelectedImages;
+            numSelectedImages = [NSString stringWithFormat:@"%d %s", self.totalSelectedAssets, "Foto's"];
+            [self.navigationItem setTitle:numSelectedImages];
+            //[self.navigationItem setTitle:self.singleSelection ? @"Pick Photo 1" : @"Pick Photos 2"];
         });
     }
 }

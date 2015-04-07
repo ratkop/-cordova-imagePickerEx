@@ -150,7 +150,9 @@
     
 	picker.assetPickerFilterDelegate = self.assetPickerFilterDelegate;
 	picker.immediateReturn = self.immediateReturn;
-   picker.singleSelection = self.singleSelection;
+    picker.singleSelection = self.singleSelection;
+    NSString *selectedImages = [[NSString alloc] initWithString:self.selectedImages];
+    picker.selectedImages = selectedImages;
 	
 	[self.navigationController pushViewController:picker animated:YES];
 }

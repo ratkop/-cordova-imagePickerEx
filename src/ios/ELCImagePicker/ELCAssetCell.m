@@ -4,7 +4,6 @@
 //  Created by ELC on 2/15/11.
 //  Copyright 2011 ELC Technologies. All rights reserved.
 //
-
 #import "ELCAssetCell.h"
 #import "ELCAsset.h"
 
@@ -87,6 +86,10 @@
             asset.selected = !asset.selected;
             UIImageView *overlayView = [_overlayViewArray objectAtIndex:i];
             overlayView.hidden = !asset.selected;
+            id tp = asset.parent;
+            NSString *numSelectedImages;
+            numSelectedImages = [NSString stringWithFormat:@"%d %s", [tp totalSelectedAssets], "Foto's"];
+            [[tp navigationItem] setTitle:numSelectedImages];
             break;
         }
         frame.origin.x = frame.origin.x + frame.size.width + 4;
@@ -94,7 +97,7 @@
 }
 
 - (void)layoutSubviews
-{    
+{
     CGFloat totalWidth = self.rowAssets.count * 75 + (self.rowAssets.count - 1) * 4;
     CGFloat startX = (self.bounds.size.width - totalWidth) / 2;
     

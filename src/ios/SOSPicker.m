@@ -24,10 +24,10 @@
 	self.width = [[options objectForKey:@"width"] integerValue];
 	self.height = [[options objectForKey:@"height"] integerValue];
 	self.quality = [[options objectForKey:@"quality"] integerValue];
+	self.selectedImages = [options objectForKey:@"selectedImages"];
 
 	// Create the an album controller and image picker
 	ELCAlbumPickerController *albumController = [[ELCAlbumPickerController alloc] init];
-	
 	if (maximumImagesCount == 1) {
       albumController.immediateReturn = true;
       albumController.singleSelection = true;
@@ -35,6 +35,10 @@
       albumController.immediateReturn = false;
       albumController.singleSelection = false;
    }
+   //NSArray *array  = [selectedImages componentsSeparatedByString:@";"];
+    NSString *selectedImages = [[NSString alloc] initWithString:self.selectedImages];
+    albumController.selectedImages = selectedImages;
+    
    
    ELCImagePickerController *imagePicker = [[ELCImagePickerController alloc] initWithRootViewController:albumController];
    imagePicker.maximumImagesCount = maximumImagesCount;
@@ -73,8 +77,8 @@
         @autoreleasepool {
             ALAssetRepresentation *assetRep = [asset defaultRepresentation];
             CGImageRef imgRef = NULL;
-			NSURL* _url = [assetRep url];
-			[resultStrings addObject:[_url absoluteString]];
+            NSURL *_url = [assetRep url];
+            [resultStrings addObject:[_url absoluteString]];
             //defaultRepresentation returns image as it appears in photo picker, rotated and sized,
             //so use UIImageOrientationUp when creating our image below.
             if (picker.returnsOriginalImage) {

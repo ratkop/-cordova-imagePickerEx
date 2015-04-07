@@ -20,5 +20,6 @@
 @property (nonatomic, assign) NSInteger width;
 @property (nonatomic, assign) NSInteger height;
 @property (nonatomic, assign) NSInteger quality;
+@property (nonatomic, retain) NSString* selectedImages;
 
 @end

@@ -36,8 +36,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -76,7 +78,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.content.pm.ActivityInfo;
 
 public class MultiImageChooserActivity extends Activity implements OnItemClickListener,
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -87,6 +88,7 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
     public static final String WIDTH_KEY = "WIDTH";
     public static final String HEIGHT_KEY = "HEIGHT";
     public static final String QUALITY_KEY = "QUALITY";
+    public static final String SELECTED_IMAGES_KEY = "SELECTED_IMAGES";
 
     private ImageAdapter ia;
 
@@ -107,6 +109,8 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
     private int desiredWidth;
     private int desiredHeight;
     private int quality;
+    
+    private String selectedImages;
 
     private GridView gridView;
 
@@ -118,29 +122,29 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
     private FakeR fakeR;
     
     private ProgressDialog progress;
+    
+    private int callsToGetView;
 
-	@Override
-	public void onBackPressed() {
-		
-	}
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	callsToGetView = 0;
         super.onCreate(savedInstanceState);
         fakeR = new FakeR(this);
         setContentView(fakeR.getId("layout", "multiselectorgrid"));
         fileNames.clear();
-
+        
+        //String picName = "storage/emulated/0/DCIM/Camera/20150331_095822.jpg";
+        //int picRotation = 90;
         maxImages = getIntent().getIntExtra(MAX_IMAGES_KEY, NOLIMIT);
         desiredWidth = getIntent().getIntExtra(WIDTH_KEY, 0);
         desiredHeight = getIntent().getIntExtra(HEIGHT_KEY, 0);
         quality = getIntent().getIntExtra(QUALITY_KEY, 0);
         maxImageCount = maxImages;
-
+        selectedImages = getIntent().getStringExtra(SELECTED_IMAGES_KEY);
+        
         Display display = getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
-		
+        
         colWidth = width / 4;
 
         gridView = (GridView) findViewById(fakeR.getId("id", "gridview"));
@@ -173,10 +177,10 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
 
         ia = new ImageAdapter(this);
         gridView.setAdapter(ia);
-
         LoaderManager.enableDebugLogging(false);
         getLoaderManager().initLoader(CURSORLOADER_THUMBS, null, this);
         getLoaderManager().initLoader(CURSORLOADER_REAL, null, this);
+        //setupPresets();
         setupHeader();
         updateAcceptButton();
         progress = new ProgressDialog(this);
@@ -189,15 +193,18 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
     public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
         String name = getImageName(position);
         int rotation = getImageRotation(position);
-
-        if (name == null) {
-            return;
-        }
-		boolean isChecked = !isChecked(position);
-		if(isChecked)
-			((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_title_textview"))).setText((maxImageCount-maxImages)+1+ " foto's");
-		else ((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_title_textview"))).setText((maxImageCount-maxImages)-1+ " foto's");
+        /*AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setTitle("Pic name");
+        builder1.setMessage(name);
+        builder1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { 
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert1 = builder1.create();
+        alert1.show();*/
 		
+        boolean isChecked = !isChecked(position);
         if (maxImages == 0 && isChecked) {
             isChecked = false;
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -239,6 +246,7 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
         }
 
         checkStatus.put(position, isChecked);
+        ((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_title_textview"))).setText((maxImageCount-maxImages) + " foto's");
         updateAcceptButton();
     }
 
@@ -285,6 +293,7 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
                 String[] columns = actualimagecursor.getColumnNames();
                 actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 orientation_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.ORIENTATION);
+                setupPresets();
                 break;
             default:
                 break;
@@ -325,8 +334,8 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
      ********************/
     private void updateAcceptButton() {
         ((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done_textview")))
-                .setEnabled(fileNames.size() != 0); 
-        getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done")).setEnabled(fileNames.size() != 0);
+                .setEnabled(fileNames.size() != 0 && fileNames.size() > 19);
+        getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done")).setEnabled(fileNames.size() != 0 && fileNames.size() > 19);
     }
 
     private void setupHeader() {
@@ -402,7 +411,39 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
         return ret;
     }
 
-    
+    public void setupPresets() {
+    	List<String> selectedImagesList = Arrays.asList(selectedImages.split(";"));
+		/*actualimagecursor.moveToPosition(0);
+		String imageName = actualimagecursor.getString(actual_image_column_index);
+    	selectedImagesList.add(imageName);
+    	actualimagecursor.moveToPosition(1);
+    	selectedImagesList.add(actualimagecursor.getString(actual_image_column_index));*/
+    	actualimagecursor.moveToPosition(-1);
+    	while(actualimagecursor.moveToNext()){
+    		
+    		String name = actualimagecursor.getString(actual_image_column_index);
+    		/*if(actualimagecursor.getPosition() == 0 && selectedImagesList.size() > 0){
+    			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Name of image");
+                builder.setMessage("First image: " + name + " Second image: " + selectedImagesList.get(1));
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { 
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+    		}*/
+    		if(selectedImagesList.contains(name)){
+	    		int orientation = actualimagecursor.getInt(orientation_column_index);
+	    		fileNames.put(name,orientation);
+	    		checkStatus.put(actualimagecursor.getPosition(), true);
+	    		maxImages--;
+    		}
+    	}
+		((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_title_textview"))).setText((maxImageCount-maxImages) + " foto's");
+    	updateAcceptButton();
+    }
     /*********************
     * Nested Classes
     ********************/
@@ -422,6 +463,7 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
         private final Bitmap mPlaceHolderBitmap;
 
         public ImageAdapter(Context c) {
+        	
             Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(), fakeR.getId("drawable", "loading_icon"));
             mPlaceHolderBitmap = Bitmap.createScaledBitmap(tmpHolderBitmap, colWidth, colWidth, false);
             if (tmpHolderBitmap != mPlaceHolderBitmap) {
@@ -448,7 +490,7 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
 
         // create a new ImageView for each item referenced by the Adapter
         public View getView(int pos, View convertView, ViewGroup parent) {
-
+        	
             if (convertView == null) {
                 ImageView temp = new SquareImageView(MultiImageChooserActivity.this);
                 temp.setScaleType(ImageView.ScaleType.CENTER_CROP);
