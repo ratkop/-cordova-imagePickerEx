@@ -4,6 +4,7 @@
 //  Created by ELC on 2/15/11.
 //  Copyright 2011 ELC Technologies. All rights reserved.
 //
+#import "ELCAssetTablePicker.h"
 #import "ELCAssetCell.h"
 #import "ELCAsset.h"
 
