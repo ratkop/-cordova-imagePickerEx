@@ -30,7 +30,8 @@ ImagePicker.prototype.getPictures = function(success, fail, options) {
 		maximumImagesCount: options.maximumImagesCount ? options.maximumImagesCount : 15,
 		width: options.width ? options.width : 0,
 		height: options.height ? options.height : 0,
-		quality: options.quality ? options.quality : 100
+		quality: options.quality ? options.quality : 100,
+		selectedImages: options.selectedImages ? options.selectedImages : ""
 	};
 
 	return cordova.exec(success, fail, "ImagePicker", "getPictures", [params]);
