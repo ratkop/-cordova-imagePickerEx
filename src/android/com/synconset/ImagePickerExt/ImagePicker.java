@@ -51,6 +51,7 @@ public class ImagePicker extends CordovaPlugin {
 			intent.putExtra("WIDTH", desiredWidth);
 			intent.putExtra("HEIGHT", desiredHeight);
 			intent.putExtra("QUALITY", quality);
+			intent.putExtra("SELECTED_IMAGES", selectedImages);
 			if (this.cordova != null) {
 				this.cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
 			}
